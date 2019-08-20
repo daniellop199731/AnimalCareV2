@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="RegistroAnimal">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtNombreAnimal"
+                android:hint="Nombre del animal"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNombreAnimal"
+                android:id="@+id/txtCodigoAnimal"
+                android:hint="Codigo del animal (Automatico)"
+                android:enabled="false"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCodigoAnimal"
+                android:id="@+id/txtTipoAnimal"
+                android:hint="Tipo de animal (Deberia ser una lista de OP)"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTipoAnimal"
+                android:id="@+id/txtRazaAnimal"
+                android:hint="Raza del animal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtRazaAnimal"
+                android:id="@+id/lnOpSexo"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Sexo del animal"
+                    android:textSize="18dp"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rdgOpSexo"
+                    android:orientation="horizontal"
+                    android:tooltipText="">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rbSexoHembra"
+                        android:text="Hembra"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rbSexoMacho"
+                        android:text="Macho"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnOpSexo"
+                android:id="@+id/txtFechaNacimiento"
+                android:text=" Fecha de nacimiento"
+                android:textSize="18dp"/>
+
+            <CalendarView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtFechaNacimiento"
+                android:id="@+id/cvFechaNacimiento">
+
+            </CalendarView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAlmacenarAnimal"
+                android:layout_below="@+id/cvFechaNacimiento"
+                android:text="Registrar animal"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
