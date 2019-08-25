@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnRegistrar;
     Button btnBuscar;
+    Button btnimaginario;
     Intent intent;
 
     @Override
@@ -43,11 +44,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnimaginario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(getApplicationContext(), BuscarAnimal.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void iniViews(){
 
         btnRegistrar = (Button)findViewById(R.id.btnRegistrarAnimal);
         btnBuscar = (Button)findViewById(R.id.btnBuscarAnimal);
+        btnimaginario = (Button)findViewById(R.id.btnimaginario);
     }
 }
