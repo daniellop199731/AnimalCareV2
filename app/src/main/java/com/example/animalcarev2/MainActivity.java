@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //intent = new Intent(getApplicationContext(), BuscarAnimal.class);
-                //startActivity(intent);
+                intent = new Intent(getApplicationContext(), BuscarAnimal.class);
+                startActivity(intent);
             }
         });
     }
