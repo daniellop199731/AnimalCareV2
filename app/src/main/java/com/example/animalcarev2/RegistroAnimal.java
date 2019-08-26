@@ -27,7 +27,7 @@ public class RegistroAnimal extends AppCompatActivity {
 
     //Vistas o componentes que se usaran
     EditText txtNombreAnimal, txtCodigoAnimal, txtTipoAnimal, txtRazaAnimal;
-    Spinner spTipoAnimal;
+    Spinner spTipoAnimal, spRazaAnimal;
     RadioButton rbSexoHembra, rbSexoMacho;
     Button btnAlmacenarAnimal;
     CalendarView cvFechaNacimiento;
@@ -63,6 +63,9 @@ public class RegistroAnimal extends AppCompatActivity {
     //Lista para almacenar los tipos de animales
     private ArrayList<String> tiposAnimales = new ArrayList<String>();
 
+    //Tamaño del arbol de Animales
+    long sizeAnimales;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +77,20 @@ public class RegistroAnimal extends AppCompatActivity {
         obtenerTiposAnimal();
         iniViwes();
 
-        //Se optiene la referencia al hijo "Animales" de la base de datos
-        //animales = FirebaseDatabase.getInstance().getReference("Animales");
-        codigo = refAnimales.push().getKey();
-        txtCodigoAnimal.setText("Codigo: "+ codigo);
+
+        refAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                sizeAnimales = dataSnapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //codigo = refAnimales.push().getKey();
+
 
 
         /**
@@ -86,16 +99,51 @@ public class RegistroAnimal extends AppCompatActivity {
         btnAlmacenarAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                refAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        sizeAnimales = dataSnapshot.getChildrenCount();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 registrarAnimal();
             }
         });
 
         /**
-         * Accion al seleccionar un opcion en el Spinner de tipo de animal
+         * Accion al selecionar un tipo de animal
          */
         spTipoAnimal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                obtenerRazas(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        /**
+         * Accion al seleccionar una raza de un tipo de animal
+         * Lo ideal es que en esta parte, los datos de TIPO DE ANIMAL y de RAZA DE ANIMAL
+         * esten bien definidos para generar un codigo en base a estos datos
+         */
+        spRazaAnimal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                char part1 = spTipoAnimal.getSelectedItem().toString().charAt(0);
+                char part2 = spRazaAnimal.getSelectedItem().toString().charAt(0);
+                long part3 = sizeAnimales;
+                codigo = part1+""+part2+""+part3;
+                txtCodigoAnimal.setText(codigo);
+                Log.i("---->", codigo);
+
 
             }
 
@@ -112,7 +160,7 @@ public class RegistroAnimal extends AppCompatActivity {
     private void registrarAnimal(){
         String nombre = txtNombreAnimal.getText().toString();
         String tipo = spTipoAnimal.getSelectedItem().toString();
-        String raza = txtRazaAnimal.getText().toString();
+        String raza = spRazaAnimal.getSelectedItem().toString();
         String sexo;
         //Log.println(Log.ASSERT, " -----------------> ", tipo);
         if (rbSexoHembra.isChecked()){
@@ -140,7 +188,7 @@ public class RegistroAnimal extends AppCompatActivity {
                         /**
                          * A continuacion, semuestra como se añade un registro con sus respectivos hijos
                          */
-                        refAnimales.child(codigo).setValue(nuevoAnimal);
+                        refAnimales.child(String.valueOf(sizeAnimales)).setValue(nuevoAnimal);
 
                         /**
                          * Modelo de JSON en firebase
@@ -184,6 +232,7 @@ public class RegistroAnimal extends AppCompatActivity {
 
                     //Log.i(String.valueOf(i), nombre);
                 }
+                //Se configura la lista del Spinner en cuestion
                 spTipoAnimal.setAdapter(crearAdapter(lista));
             }
 
@@ -198,17 +247,35 @@ public class RegistroAnimal extends AppCompatActivity {
     /**
      * Metodo que llena una lista con las razas del tipo de animal selecionado
      */
-    private void obtenerRazas(int index){
-        //Referencia a la coleccion de TiposAnimales
+    private void obtenerRazas(final int index){
+        //Lista donde se guardan las razas del tipo de animal seleccionado
+        final ArrayList<String> lista = new ArrayList<String>();
+        //Para obtener datos de la base de datos
         refTiposAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             //AQUI: lo que pasa cuando se cambian los datos
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Se optiene la cantidad registrada de razas del tipo de animal seleccionado
+                long size = dataSnapshot.child(String.valueOf(index)).child("razas").getChildrenCount();
 
+                //Variable para almacenar la raza por cada iteracion
+                String nombre;
+
+                //Ciclo para recorrer el arbol de razas
+                for(int i = 0; i < size; i++){
+                    //Se optiene el nombre de la raza
+                    nombre = dataSnapshot.child(String.valueOf(index)).child("razas")
+                            .child(String.valueOf(i)).child("nombre").getValue(String.class);
+
+                    //Se almacena en la lista
+                    lista.add(nombre);
+                }
+                //Se configura el adaptador del Spinner en cuestion
+                spRazaAnimal.setAdapter(crearAdapter(lista));
             }
 
             @Override
-            //AQUI: cuando hay algun error (Cancelacion de la referencia)
+            //AQUI: cuando hay algun error (Cancelacion de la referencia
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
@@ -232,7 +299,7 @@ public class RegistroAnimal extends AppCompatActivity {
         txtNombreAnimal = (EditText) findViewById(R.id.txtNombreAnimal);
         txtCodigoAnimal = (EditText) findViewById(R.id.txtCodigoAnimal);
         //txtTipoAnimal = (EditText) findViewById(R.id.txtTipoAnimal);
-        txtRazaAnimal = (EditText) findViewById(R.id.txtRazaAnimal);
+        spRazaAnimal = (Spinner) findViewById(R.id.spRazaAnimal);
 
         spTipoAnimal = (Spinner) findViewById(R.id.spTipoAnimal);
         //spTipoAnimal.setAdapter(crearAdapter(tiposAnimales));
