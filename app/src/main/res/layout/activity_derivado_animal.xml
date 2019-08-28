@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DerivadoAnimal">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text=" Tipos de animales"
+        android:textSize="35dp"
+        android:id="@+id/txttiposanimales"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spntipoAnimal"
+        android:layout_below="@+id/txttiposanimales">
+    </Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text=" Derivados:"
+        android:textSize="35dp"
+        android:id="@+id/txtderivados"
+        android:layout_below="@+id/spntipoAnimal"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtderivados"
+        android:id="@+id/txtnombreDerivado"
+        android:hint="Nombre derivado"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtnombreDerivado"
+        android:id="@+id/txtunidadDerivado"
+        android:hint="Unidad derivado"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnalmacenarTipoDerivado"
+        android:layout_below="@+id/txtunidadDerivado"
+        android:text="Registrar Tipo Derivado"/>
+
+
+</RelativeLayout>
+

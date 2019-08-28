@@ -34,8 +34,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Imaginario"
-        android:id="@+id/btnimaginario"
+        android:text="Derivado animal"
+        android:id="@+id/btnderivadoAnimal"
         android:layout_below="@+id/btnBuscarAnimal"/>
 
 </RelativeLayout>
