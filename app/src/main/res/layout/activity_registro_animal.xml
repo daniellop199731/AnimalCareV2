@@ -19,7 +19,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtNombreAnimal"
-                android:hint="Nombre del animal"/>
+                android:hint="Nombre del animal"
+                android:inputType="textCapWords"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -29,24 +30,69 @@
                 android:hint="Codigo del animal (Automatico)"
                 android:enabled="false"/>
 
-            <EditText
+            <!--<EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtCodigoAnimal"
                 android:id="@+id/txtTipoAnimal"
                 android:hint="Tipo de animal (Deberia ser una lista de OP)"/>
+             -->
 
-            <EditText
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTipoAnimal"
-                android:id="@+id/txtRazaAnimal"
-                android:hint="Raza del animal" />
+                android:layout_below="@+id/txtCodigoAnimal"
+                android:id="@+id/rlTipoAnimal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvTipoAnimal"
+                    android:text="Tipo de animal"
+                    android:textSize="18dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTipoAnimal"
+                    android:id="@+id/spTipoAnimal"
+                    android:spinnerMode="dropdown"
+                    android:visibility="visible">
+                </Spinner>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlTipoAnimal"
+                android:id="@+id/rlRazaAnimal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvRazaAnimal"
+                    android:text="Raza de animal"
+                    android:textSize="18dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvRazaAnimal"
+                    android:id="@+id/spRazaAnimal"
+                    android:spinnerMode="dropdown"
+                    android:visibility="visible">
+                </Spinner>
+
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtRazaAnimal"
+                android:layout_below="@+id/rlRazaAnimal"
                 android:id="@+id/lnOpSexo"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
