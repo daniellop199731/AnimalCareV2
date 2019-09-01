@@ -6,36 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".BuscarAnimal">
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:padding="10dp">
+
        <RelativeLayout
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+           android:layout_height="match_parent">
 
            <EditText
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:id="@+id/txtcodigoAnimal"
                android:hint="Ingrese el código del animal a buscar"/>
-           <EditText
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_below="@+id/txtcodigoAnimal"
-               android:id="@+id/txtresultado"
-               android:hint="Resultado"/>
 
            <Button
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:id="@+id/btnBuscar"
-               android:layout_below="@+id/txtresultado"
+               android:layout_below="@+id/txtcodigoAnimal"
                android:text="Buscar"/>
+
+           <TextView
+               android:id="@+id/tvCodigo"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/btnBuscar"
+               android:layout_marginLeft="15dp"
+               android:text="Código |  " />
+
+           <TextView
+               android:id="@+id/tvNombre"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBaseline="@id/tvCodigo"
+               android:layout_toRightOf="@id/tvCodigo"
+               android:text="Nombre  |  " />
+
+           <TextView
+               android:id="@+id/tvTipoAnimal"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBaseline="@id/tvCodigo"
+               android:layout_toRightOf="@id/tvNombre"
+               android:text="Tipo  |  " />
+           <TextView
+               android:id="@+id/tvRazaAnimal"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBaseline="@id/tvCodigo"
+               android:layout_toRightOf="@id/tvTipoAnimal"
+               android:text="Raza" />
+
+           <ListView
+               android:layout_width="match_parent"
+               android:layout_height="500dp"
+               android:layout_below="@+id/tvNombre"
+               android:id="@+id/txtresultado"/>
 
 
        </RelativeLayout>
-    </ScrollView>
 
 
 
