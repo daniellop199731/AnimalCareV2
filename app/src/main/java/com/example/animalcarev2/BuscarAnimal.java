@@ -46,11 +46,11 @@ public class BuscarAnimal extends AppCompatActivity {
     private String codigo;
 
     //Lista para almacenar los tipos de animales
-    private ArrayList<Animal> animal = new ArrayList<Animal>();
-    ArrayAdapter<Animal> adapter;
+   // private ArrayList<Animal> animal = new ArrayList<Animal>();
+    //ArrayAdapter<Animal> adapter;
 
     //Tamaño del arbol de Animales
-    long sizeAnimales;
+   // long sizeAnimales;
     private DatabaseReference refAnimales = database.getReference(C_ANIMALES);
 
 
@@ -75,7 +75,7 @@ public class BuscarAnimal extends AppCompatActivity {
      * Metodo que llena la lista de tipos de animal, con los tipos de animal que hay en firebase
      */
     private void obtenerAnimales() {
-        final ArrayList<String> lista = new ArrayList<>();
+       // final ArrayList<String> lista = new ArrayList<>();
         //Para obtener datos de la base de datos
         refAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
