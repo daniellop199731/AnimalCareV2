@@ -7,9 +7,9 @@ public class Animal {
     private String tipo;
     private String raza;
     private String sexo;
-    private Long fecha_nacimiento;
+    private String fecha_nacimiento;
 
-    public Animal(String nombre, String codigo, String tipo, String raza, String sexo, Long fecha_nacimiento) {
+    public Animal(String nombre, String codigo, String tipo, String raza, String sexo, String fecha_nacimiento) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.tipo = tipo;
@@ -58,11 +58,11 @@ public class Animal {
         this.sexo = sexo;
     }
 
-    public Long getFecha_nacimiento() {
+    public String getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(Long fecha_nacimiento) {
+    public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 }
