@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RegistroAnimal extends AppCompatActivity {
 
@@ -30,7 +32,7 @@ public class RegistroAnimal extends AppCompatActivity {
     Spinner spTipoAnimal, spRazaAnimal;
     RadioButton rbSexoHembra, rbSexoMacho;
     Button btnAlmacenarAnimal;
-    CalendarView cvFechaNacimiento;
+    DatePicker cvFechaNacimiento;
 
     //Constantes
     private final String SEXO_HEMBRA = "Hembra";
@@ -160,7 +162,12 @@ public class RegistroAnimal extends AppCompatActivity {
     private void registrarAnimal(){
         String nombre = txtNombreAnimal.getText().toString();
         String tipo = spTipoAnimal.getSelectedItem().toString();
-        String raza = spRazaAnimal.getSelectedItem().toString();
+        String raza;
+        if(spRazaAnimal.getSelectedItem() != null){
+            raza = spRazaAnimal.getSelectedItem().toString();
+        }else{
+            raza = "N/A";
+        }
         String sexo;
         //Log.println(Log.ASSERT, " -----------------> ", tipo);
         if (rbSexoHembra.isChecked()){
@@ -168,8 +175,13 @@ public class RegistroAnimal extends AppCompatActivity {
         } else {
             sexo = SEXO_MACHO;
         }
-        long fecha_nacimiento = cvFechaNacimiento.getDate();
-
+        String fecha_nacimiento = cvFechaNacimiento.getYear() + "/" + cvFechaNacimiento.getMonth() + "/" + cvFechaNacimiento.getDayOfMonth();
+        /*java.sql.Date newDate = new java.sql.Date(76445678);
+        Date fecha_nacimiento = new Date();
+        fecha_nacimiento.setYear(cvFechaNacimiento.getYear()-1900);
+        fecha_nacimiento.setMonth(cvFechaNacimiento.getMonth());
+        fecha_nacimiento.setDate(cvFechaNacimiento.getDayOfMonth());
+        Log.i("------->", ""+ fecha_nacimiento);*/
         if(nombre.isEmpty()){
             Toast.makeText(this, "Falta el nombre", Toast.LENGTH_SHORT).show();
         }else{
@@ -198,7 +210,7 @@ public class RegistroAnimal extends AppCompatActivity {
                          */
 
                         Toast.makeText(this, "Animal registrado con exito", Toast.LENGTH_SHORT).show();
-                        //this.finish();
+                        this.finish();
                     }
                 }
             }
@@ -307,7 +319,7 @@ public class RegistroAnimal extends AppCompatActivity {
         rbSexoHembra = (RadioButton) findViewById(R.id.rbSexoHembra);
         rbSexoMacho = (RadioButton) findViewById(R.id.rbSexoMacho);
 
-        cvFechaNacimiento = (CalendarView)findViewById(R.id.cvFechaNacimiento);
+        cvFechaNacimiento = (DatePicker)findViewById(R.id.cvFechaNacimiento);
 
         btnAlmacenarAnimal = (Button) findViewById(R.id.btnAlmacenarAnimal);
     }

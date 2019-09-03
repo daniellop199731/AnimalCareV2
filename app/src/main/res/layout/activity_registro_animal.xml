@@ -133,16 +133,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lnOpSexo"
                 android:id="@+id/txtFechaNacimiento"
-                android:text=" Fecha de nacimiento"
+                android:text=" Fecha de nacimiento\n"
                 android:textSize="18dp"/>
 
-            <CalendarView
+            <DatePicker
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/txtFechaNacimiento"
                 android:id="@+id/cvFechaNacimiento">
 
-            </CalendarView>
+            </DatePicker>
+
 
             <Button
                 android:layout_width="match_parent"

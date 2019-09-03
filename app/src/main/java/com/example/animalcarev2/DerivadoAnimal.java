@@ -3,12 +3,14 @@ package com.example.animalcarev2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 public class DerivadoAnimal extends AppCompatActivity {
 
    Spinner spntipoAnimal;
+   Button btnRegistrar;
+   EditText txtNombre, txtUnidad;
 
    private final String C_TIPOSANIMALES = "TiposAnimales";
 
@@ -34,12 +38,51 @@ public class DerivadoAnimal extends AppCompatActivity {
 
     private DatabaseReference refTiposAnimales = database.getReference(C_TIPOSANIMALES);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_derivado_animal);
-        obtenerTiposAnimales();
         iniViwes();
+        obtenerTiposAnimales();
+
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String nombre = txtNombre.getText().toString();
+                final String unidad = txtUnidad.getText().toString();
+                final int posicion = spntipoAnimal.getSelectedItemPosition();
+                refTiposAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        long valorNuevo = dataSnapshot.child(String.valueOf(posicion)).child("derivadosAnimal").getChildrenCount();
+                        boolean existe = false;
+
+                        for (int i = 0; i< valorNuevo; i++){
+                            String nombreFirebase = dataSnapshot.child(String.valueOf(posicion)).child("derivadosAnimal").child(String.valueOf(i)).child("nombre").getValue(String.class);
+                            if(nombreFirebase.equalsIgnoreCase(nombre)){
+                                existe = true;
+                            }
+                        }
+                        if(existe){
+                            Toast.makeText(getApplicationContext(), "Derivado ya existe", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Derivado nuevoDerivado = new Derivado(nombre, unidad);
+                            refTiposAnimales.child(String.valueOf(posicion)).child("derivadosAnimal").child(String.valueOf(valorNuevo)).setValue(nuevoDerivado);
+                            Toast.makeText(getApplicationContext(), "Derivado registrado", Toast.LENGTH_SHORT).show();
+                            txtNombre.setText("");
+                            txtUnidad.setText("");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -83,11 +126,15 @@ public class DerivadoAnimal extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     public void iniViwes(){
 
         spntipoAnimal = (Spinner) findViewById(R.id.spntipoAnimal);
-
+        btnRegistrar = (Button) findViewById(R.id.btnalmacenarTipoDerivado);
+        txtNombre = (EditText) findViewById(R.id.txtnombreDerivado);
+        txtUnidad = (EditText) findViewById(R.id.txtunidadDerivado);
     }
 }
