@@ -99,7 +99,7 @@
                 android:orientation="vertical"
                 >
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Sexo del animal"
@@ -123,7 +123,22 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rbSexoMacho"
                         android:text="Macho"/>
-                </RadioGroup>
+                </RadioGroup>-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Sexo del animal"
+                    android:textSize="18dp"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvRazaAnimal"
+                    android:id="@+id/spSexo"
+                    android:spinnerMode="dropdown"
+                    android:visibility="visible">
+                </Spinner>
 
             </LinearLayout>
 

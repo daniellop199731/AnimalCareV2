@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,13 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class RegistroAnimal extends AppCompatActivity {
 
     //Vistas o componentes que se usaran
     EditText txtNombreAnimal, txtCodigoAnimal, txtTipoAnimal, txtRazaAnimal;
-    Spinner spTipoAnimal, spRazaAnimal;
+    Spinner spTipoAnimal, spRazaAnimal, spSexo;
     RadioButton rbSexoHembra, rbSexoMacho;
     Button btnAlmacenarAnimal;
     DatePicker cvFechaNacimiento;
@@ -75,11 +73,14 @@ public class RegistroAnimal extends AppCompatActivity {
         setContentView(R.layout.activity_registro_animal);
 
         //METODOS INICIALES PARA REALIZAR LAS OPERACIONES
-        //tiposAnimales = obtenerTiposAnimal();
-        obtenerTiposAnimal();
         iniViwes();
+        obtenerTiposAnimal();
+        llenarListSexoAnimal();
 
 
+        /**
+         * Accion que determina el tamaño del arbol de animales (Canidad de animales registrados)
+         */
         refAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -93,36 +94,13 @@ public class RegistroAnimal extends AppCompatActivity {
         });
         //codigo = refAnimales.push().getKey();
 
-
-
-        /**
-         * Accion del boton de "Registrar animal"
-         */
-        btnAlmacenarAnimal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        sizeAnimales = dataSnapshot.getChildrenCount();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-                registrarAnimal();
-            }
-        });
-
         /**
          * Accion al selecionar un tipo de animal
          */
         spTipoAnimal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                obtenerRazas(i);
+                obtenerRazasAnimal(i);
             }
 
             @Override
@@ -152,6 +130,36 @@ public class RegistroAnimal extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        /**
+         * Accion del boton de "Registrar animal"
+         */
+        btnAlmacenarAnimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refAnimales.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        sizeAnimales = dataSnapshot.getChildrenCount();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                //registrarAnimal();
+                registrarAnimalV2(  txtNombreAnimal.getText().toString(),
+                                    codigo,
+                                    spTipoAnimal.getSelectedItem().toString(),
+                                    spRazaAnimal.getSelectedItem().toString(),
+                                    spSexo.getSelectedItem().toString(),
+                        cvFechaNacimiento.getYear() + "/" +
+                                    cvFechaNacimiento.getMonth() + "/" +
+                                    cvFechaNacimiento.getDayOfMonth()
+                                );
             }
         });
     }
@@ -217,6 +225,43 @@ public class RegistroAnimal extends AppCompatActivity {
         }
     }
 
+    private void registrarAnimalV2(String nombre, String codigo, String tipo, String raza, String sexo, String feNacimiento){
+
+        if(nombre.isEmpty()){
+            Toast.makeText(this, "Falta el nombre", Toast.LENGTH_SHORT).show();
+        }else{
+            if (tipo.isEmpty()){
+                Toast.makeText(this, "Falta el tipo", Toast.LENGTH_SHORT).show();
+            }else{
+                if (raza.isEmpty()){
+                    Toast.makeText(this, "Falta la raza", Toast.LENGTH_SHORT).show();
+                }else{
+                    if (sexo.isEmpty()){
+                        Toast.makeText(this, "Falta el sexo", Toast.LENGTH_SHORT).show();
+                    }else{
+
+                        //String codigo = animal.push().getKey();
+                        Animal nuevoAnimal = new Animal(nombre, codigo, tipo, raza, sexo, feNacimiento);
+                        /**
+                         * A continuacion, semuestra como se añade un registro con sus respectivos hijos
+                         */
+                        refAnimales.child(String.valueOf(sizeAnimales)).setValue(nuevoAnimal);
+
+                        /**
+                         * Modelo de JSON en firebase
+                         * Animales
+                         *         "codigo"
+                         *                  <el objeto del animal
+                         */
+
+                        Toast.makeText(this, "Animal registrado con exito", Toast.LENGTH_SHORT).show();
+                        this.finish();
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Metodo que llena la lista de tipos de animal, con los tipos de animal que hay en firebase
      */
@@ -259,7 +304,7 @@ public class RegistroAnimal extends AppCompatActivity {
     /**
      * Metodo que llena una lista con las razas del tipo de animal selecionado
      */
-    private void obtenerRazas(final int index){
+    private void obtenerRazasAnimal(final int index){
         //Lista donde se guardan las razas del tipo de animal seleccionado
         final ArrayList<String> lista = new ArrayList<String>();
         //Para obtener datos de la base de datos
@@ -295,6 +340,16 @@ public class RegistroAnimal extends AppCompatActivity {
     }
 
     /**
+     * Metodo para llenar el Spinner con las opciones del sexo del animal
+     */
+    private void llenarListSexoAnimal(){
+        final ArrayList<String> lista = new ArrayList<>();
+        lista.add(SEXO_HEMBRA);
+        lista.add(SEXO_MACHO);
+        spSexo.setAdapter(crearAdapter(lista));
+    }
+
+    /**
      * Metodo que crea un adaptador para los diferentes tipos de lista (en la vista)
      * @param list ArrayList que se desea mostrar en la vista
      * @return el adaptador del ArrayList
@@ -314,10 +369,11 @@ public class RegistroAnimal extends AppCompatActivity {
         spRazaAnimal = (Spinner) findViewById(R.id.spRazaAnimal);
 
         spTipoAnimal = (Spinner) findViewById(R.id.spTipoAnimal);
+        spSexo = (Spinner)findViewById(R.id.spSexo);
         //spTipoAnimal.setAdapter(crearAdapter(tiposAnimales));
 
-        rbSexoHembra = (RadioButton) findViewById(R.id.rbSexoHembra);
-        rbSexoMacho = (RadioButton) findViewById(R.id.rbSexoMacho);
+        //rbSexoHembra = (RadioButton) findViewById(R.id.rbSexoHembra);
+        //rbSexoMacho = (RadioButton) findViewById(R.id.rbSexoMacho);
 
         cvFechaNacimiento = (DatePicker)findViewById(R.id.cvFechaNacimiento);
 
