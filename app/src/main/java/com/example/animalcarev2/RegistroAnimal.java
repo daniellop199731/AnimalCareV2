@@ -308,19 +308,19 @@ public class RegistroAnimal extends AppCompatActivity {
      *  Metodo que se usa para iniciar las vistas o componentes, en el metodo OnCreate
      */
     private void iniViwes(){
-        txtNombreAnimal = (EditText) findViewById(R.id.txtNombreAnimal);
-        txtCodigoAnimal = (EditText) findViewById(R.id.txtCodigoAnimal);
+        txtNombreAnimal = findViewById(R.id.txtNombreAnimal);
+        txtCodigoAnimal = findViewById(R.id.txtCodigoAnimal);
         //txtTipoAnimal = (EditText) findViewById(R.id.txtTipoAnimal);
-        spRazaAnimal = (Spinner) findViewById(R.id.spRazaAnimal);
+        spRazaAnimal = findViewById(R.id.spRazaAnimal);
 
-        spTipoAnimal = (Spinner) findViewById(R.id.spTipoAnimal);
+        spTipoAnimal = findViewById(R.id.spTipoAnimal);
         //spTipoAnimal.setAdapter(crearAdapter(tiposAnimales));
 
-        rbSexoHembra = (RadioButton) findViewById(R.id.rbSexoHembra);
-        rbSexoMacho = (RadioButton) findViewById(R.id.rbSexoMacho);
+        rbSexoHembra = findViewById(R.id.rbSexoHembra);
+        rbSexoMacho = findViewById(R.id.rbSexoMacho);
 
-        cvFechaNacimiento = (DatePicker)findViewById(R.id.cvFechaNacimiento);
+        cvFechaNacimiento = findViewById(R.id.cvFechaNacimiento);
 
-        btnAlmacenarAnimal = (Button) findViewById(R.id.btnAlmacenarAnimal);
+        btnAlmacenarAnimal = findViewById(R.id.btnAlmacenarAnimal);
     }
 }
