@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DerivadoAnimal"></activity>
+        <activity android:name=".MenuRegistroAnimal"></activity>
+        <activity android:name=".DerivadoAnimal" />
         <activity android:name=".BuscarAnimal" />
         <activity android:name=".RegistroAnimal" />
         <activity android:name=".MainActivity">
