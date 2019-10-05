@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="RegistroAnimal">
+    tools:context=".RegistrarParto">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,30 +19,35 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtNombreAnimal"
-                android:hint="Nombre del animal"
+                android:id="@+id/txtNombreCria"
+                android:hint="Nombre de la cria"
                 android:inputType="textCapWords"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtNombreAnimal"
-                android:id="@+id/txtCodigoAnimal"
+                android:layout_below="@+id/txtNombreCria"
+                android:id="@+id/txtCodigoCria"
                 android:hint="Codigo del animal (Automatico)"
                 android:enabled="false"/>
 
-            <!--<EditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtCodigoAnimal"
-                android:id="@+id/txtTipoAnimal"
-                android:hint="Tipo de animal (Deberia ser una lista de OP)"/>
-             -->
+                android:layout_below="@+id/txtCodigoCria"
+                android:id="@+id/txtCodigoPadre"
+                android:hint="Código del padre"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCodigoPadre"
+                android:id="@+id/txtCodigoMadre"
+                android:hint="Código de la madre"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtCodigoAnimal"
+                android:layout_below="@+id/txtCodigoMadre"
                 android:id="@+id/rlTipoAnimal">
 
                 <TextView
@@ -99,7 +105,7 @@
                 android:orientation="vertical"
                 >
 
-                <!--<TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Sexo del animal"
@@ -123,22 +129,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rbSexoMacho"
                         android:text="Macho"/>
-                </RadioGroup>-->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Sexo del animal"
-                    android:textSize="18dp"/>
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvRazaAnimal"
-                    android:id="@+id/spSexo"
-                    android:spinnerMode="dropdown"
-                    android:visibility="visible">
-                </Spinner>
+                </RadioGroup>
 
             </LinearLayout>
 
@@ -163,9 +154,9 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnAlmacenarAnimal"
+                android:id="@+id/btnAlmacenarCria"
                 android:layout_below="@+id/cvFechaNacimiento"
-                android:text="Registrar animal"/>
+                android:text="Registrar cria"/>
 
         </RelativeLayout>
 

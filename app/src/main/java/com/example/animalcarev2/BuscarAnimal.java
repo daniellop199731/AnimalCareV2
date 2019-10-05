@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -67,13 +66,6 @@ public class BuscarAnimal extends AppCompatActivity {
             public void onClick(View view) {
                 String codigo = txtcodigoAnimal.getText().toString();
                 buscar(codigo);
-            }
-        });
-
-        txtresultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
             }
         });
     }

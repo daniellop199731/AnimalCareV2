@@ -1,18 +1,20 @@
 package com.example.animalcarev2;
 
-public class Animal {
-
+public class Cria {
     public String nombre;
     private String codigo;
     private String tipo;
     private String raza;
     private String sexo;
     private String fecha_nacimiento;
+    private String codigoP;
+    private String codigoM;
 
-
-    public Animal(String nombre, String codigo, String tipo, String raza, String sexo, String fecha_nacimiento) {
+    public Cria(String nombre, String codigo, String codigoP, String codigoM, String tipo, String raza, String sexo, String fecha_nacimiento) {
         this.nombre = nombre;
         this.codigo = codigo;
+        this.codigoP = codigoP;
+        this.codigoM = codigoM;
         this.tipo = tipo;
         this.raza = raza;
         this.sexo = sexo;
@@ -25,6 +27,22 @@ public class Animal {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getCodigoP() {
+        return codigoP;
+    }
+
+    public void setCodigoP(String codigoP) {
+        this.codigoP = codigoP;
+    }
+
+    public String getCodigoM() {
+        return codigoM;
+    }
+
+    public void setCodigoM(String codigoM) {
+        this.codigoM = codigoM;
     }
 
     public String getCodigo() {
