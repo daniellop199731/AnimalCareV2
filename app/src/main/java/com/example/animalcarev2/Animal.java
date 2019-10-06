@@ -8,6 +8,7 @@ public class Animal {
     private String raza;
     private String sexo;
     private String fecha_nacimiento;
+    private String enVida;
 
 
     public Animal(String nombre, String codigo, String tipo, String raza, String sexo, String fecha_nacimiento) {
@@ -17,6 +18,7 @@ public class Animal {
         this.raza = raza;
         this.sexo = sexo;
         this.fecha_nacimiento = fecha_nacimiento;
+        this.enVida = "s";
     }
 
     public String getNombre() {
@@ -65,5 +67,9 @@ public class Animal {
 
     public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public String getEnVida(){
+        return enVida;
     }
 }

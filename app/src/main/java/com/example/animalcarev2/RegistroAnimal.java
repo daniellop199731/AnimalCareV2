@@ -54,9 +54,6 @@ public class RegistroAnimal extends AppCompatActivity {
     //Referencia a la colecion Animal
     private DatabaseReference animales;
 
-    //Referencia de la raiz de la base de datos de firebase
-    private DatabaseReference raiz = FirebaseDatabase.getInstance().getReference();
-
     //Variable que almacena el conigo autogenerado
     private String codigo;
 

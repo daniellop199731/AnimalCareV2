@@ -3,9 +3,12 @@ package com.example.animalcarev2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -46,13 +49,17 @@ public class BuscarAnimal extends AppCompatActivity {
     private String codigo;
 
     //Lista para almacenar los tipos de animales
-   // private ArrayList<Animal> animal = new ArrayList<Animal>();
+    private ArrayList<Animal> listaAnimales = new ArrayList<Animal>();
     //ArrayAdapter<Animal> adapter;
 
     //Tamaño del arbol de Animales
    // long sizeAnimales;
     private DatabaseReference refAnimales = database.getReference(C_ANIMALES);
 
+    //Objeto para el cambio de activitys
+    private Intent intent;
+
+    private Animal animal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +75,30 @@ public class BuscarAnimal extends AppCompatActivity {
                 buscar(codigo);
             }
         });
-    }
 
+        //Accion del Spinner para seleccionar el registro al que queremos acceder
+        txtresultado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Objeto para el envio de datos entre activiys
+                Bundle bundle = new Bundle();
+                //Log.i("---->", String.valueOf(i));
+                Log.i("----->", listaAnimales.get(i).getNombre());
+                animal = listaAnimales.get(i);
+                intent = new Intent(getApplicationContext(), MenuRegistroAnimal.class);
+                bundle.putString("nombre", animal.getNombre());
+                bundle.putString("codigo", animal.getCodigo());
+                bundle.putString("tipo", animal.getTipo());
+                bundle.putString("raza", animal.getRaza());
+                bundle.putString("sexo", animal.getSexo());
+                bundle.putString("fecha_nacimiento", animal.getFecha_nacimiento());
+                //bundle.putString("enVida", animal.getEnVida());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+    }
 
     /**
      * Metodo que llena la lista de tipos de animal, con los tipos de animal que hay en firebase
@@ -82,15 +111,23 @@ public class BuscarAnimal extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
                 ArrayList<String> animalesFirebase = new ArrayList<>();
-                for (int i = 0; i < size; i++) {
+                listaAnimales.clear();
+
+                String animal ;
+                for (long i = 0; i < size; i++) {
 
                     String code = dataSnapshot.child("" + i).child("codigo").getValue(String.class);
                     String nombre = dataSnapshot.child("" + i).child("nombre").getValue(String.class);
                     String tipo = dataSnapshot.child("" + i).child("tipo").getValue(String.class);
                     String raza = dataSnapshot.child("" + i).child("raza").getValue(String.class);
-                    String animal = code + " | " + nombre + " | " + tipo + " | " + raza;
+                    String sexo = dataSnapshot.child("" + i).child("sexo").getValue(String.class);
+                    String fnacimiento = dataSnapshot.child("" + i).child("fecha_nacimiento").getValue(String.class);
+                    animal = code + " | " + nombre + " | " + tipo + " | " + raza;
 
                     animalesFirebase.add(animal);
+                    Animal animalT = new Animal(nombre, code, tipo, raza, sexo, fnacimiento);
+                    listaAnimales.add(animalT);
+                    Log.i("----------->", animalT.getNombre());
                 }
 
                 adaptar(animalesFirebase);
@@ -110,16 +147,21 @@ public class BuscarAnimal extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
                 ArrayList<String> animalesFirebase = new ArrayList<>();
+                listaAnimales.clear();
                 for (int i = 0; i < size; i++) {
 
                     String code = dataSnapshot.child("" + i).child("codigo").getValue(String.class);
                     String nombre = dataSnapshot.child("" + i).child("nombre").getValue(String.class);
                     String tipo = dataSnapshot.child("" + i).child("tipo").getValue(String.class);
                     String raza = dataSnapshot.child("" + i).child("raza").getValue(String.class);
+                    String sexo = dataSnapshot.child("" + i).child("sexo").getValue(String.class);
+                    String fnacimiento = dataSnapshot.child("" + i).child("fecha_nacimiento").getValue(String.class);
                     String animal = code + " | " + nombre + " | " + tipo + " | " + raza;
 
                     if (code.equalsIgnoreCase(filtro) || nombre.equalsIgnoreCase(filtro) || tipo.equalsIgnoreCase(filtro) || raza.equalsIgnoreCase(filtro)) {
                         animalesFirebase.add(animal);
+                        Animal animalT = new Animal(nombre, code, tipo, raza, sexo, fnacimiento);
+                        listaAnimales.add(animalT);
                     }
                 }
                 if (animalesFirebase.size() == 0) {

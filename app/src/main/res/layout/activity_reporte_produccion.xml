@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReporteProduccion"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitulo"
+        android:text="Reporte de produccion\n"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCodigo"
+        android:hint="Codigo del animal"
+        android:enabled="false"
+        android:layout_below="@+id/txtTitulo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtLabel1"
+        android:text="Derivado:"
+        android:layout_below="@+id/txtCodigo"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spDerivados"
+        android:spinnerMode="dropdown"
+        android:visibility="visible"
+        android:layout_below="@+id/txtLabel1">
+    </Spinner>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtUnidadMedida"
+        android:hint="Unidad de medida"
+        android:layout_below="@+id/spDerivados"
+        android:enabled="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtLabel2"
+        android:text="Cantidad:"
+        android:layout_below="@+id/txtUnidadMedida"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCantidad"
+        android:inputType="number"
+        android:hint="Cantidad"
+        android:text="0"
+        android:defaultFocusHighlightEnabled="true"
+        android:layout_below="@+id/txtLabel2"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtFeProduccion"
+        android:hint="Fecha de produccion"
+        android:layout_below="@+id/txtCantidad"
+        android:enabled="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnReportarProduccion"
+        android:text="Reportar produccion"
+        android:layout_below="@+id/txtFeProduccion"/>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/cvFechaProduccion"
+        android:layout_below="@+id/btnReportarProduccion"
+        android:visibility="invisible">
+
+    </DatePicker>
+
+
+</RelativeLayout>

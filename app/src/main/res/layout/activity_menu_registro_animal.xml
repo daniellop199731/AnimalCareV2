@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuRegistroAnimal">
+    tools:context=".MenuRegistroAnimal"
+    android:padding="10dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitulo"
+        android:text="Dados del animal\n"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDatosAnimal"
+        android:textSize="15dp"
+        android:layout_below="@+id/txtTitulo"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnReporteProduccion"
+        android:text="Reportar produccion"
+        android:layout_below="@+id/txtDatosAnimal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnReporteMuerte"
+        android:text="Reportar muerte"
+        android:layout_below="@+id/btnReporteProduccion"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/btnReporteCria"
+        android:text="Reportar cria"
+        android:layout_below="@+id/btnReporteMuerte"/>
+
+</RelativeLayout>
