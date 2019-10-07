@@ -22,6 +22,8 @@ public class MenuRegistroAnimal extends AppCompatActivity {
 
     private String tipoAnimal;
 
+    private String sexoAnimal;
+
     private Intent intent;
 
 
@@ -31,6 +33,7 @@ public class MenuRegistroAnimal extends AppCompatActivity {
         setContentView(R.layout.activity_menu_registro_animal);
         iniViews();
 
+
         //Accion del boton "Reportar produccion"
         btnReportarProduccion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,23 +41,33 @@ public class MenuRegistroAnimal extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("codigoAnimal", codigoAimal);
                 bundle.putString("tipoAnimal", tipoAnimal);
-                intent = new Intent(getApplicationContext(), ReporteProduccion.class);
+                intent = new Intent(getApplicationContext(), RegistroProduccion.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
+        //Accion del boton "Reportar muerte"
         btnReportatMuerte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("codigoAnimal", codigoAimal);
+                intent = new Intent(getApplicationContext(), RegistroMuerte.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
+        //Accion del boton "Reportar cria"
         btnReportarCria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString("codigoAnimal", codigoAimal);
+                intent = new Intent(getApplicationContext(), RegistroAnimal.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
@@ -71,6 +84,7 @@ public class MenuRegistroAnimal extends AppCompatActivity {
         if (!bundle.equals(null)){
             codigoAimal = bundle.getString("codigo");
             tipoAnimal = bundle.getString("tipo");
+            sexoAnimal = bundle.getString("sexo");
             datos =     "Nombre : " + bundle.getString("nombre") + "\n\n" +
                         "Codigo  : " + bundle.getString("codigo") + "\n\n" +
                         "Tipo      : " + bundle.getString("tipo") + "\n\n" +
@@ -92,6 +106,10 @@ public class MenuRegistroAnimal extends AppCompatActivity {
 
         btnReportarProduccion = findViewById(R.id.btnReporteProduccion);
         btnReportatMuerte = findViewById(R.id.btnReporteMuerte);
+
         btnReportarCria = findViewById(R.id.btnReporteCria);
+        if(sexoAnimal.equals("Macho")){
+            btnReportarCria.setVisibility(View.INVISIBLE);
+        }
     }
 }

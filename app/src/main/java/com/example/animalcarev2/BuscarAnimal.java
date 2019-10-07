@@ -116,20 +116,22 @@ public class BuscarAnimal extends AppCompatActivity {
                 String animal ;
                 for (long i = 0; i < size; i++) {
 
-                    String code = dataSnapshot.child("" + i).child("codigo").getValue(String.class);
-                    String nombre = dataSnapshot.child("" + i).child("nombre").getValue(String.class);
-                    String tipo = dataSnapshot.child("" + i).child("tipo").getValue(String.class);
-                    String raza = dataSnapshot.child("" + i).child("raza").getValue(String.class);
-                    String sexo = dataSnapshot.child("" + i).child("sexo").getValue(String.class);
-                    String fnacimiento = dataSnapshot.child("" + i).child("fecha_nacimiento").getValue(String.class);
-                    animal = code + " | " + nombre + " | " + tipo + " | " + raza;
+                    String enVida = dataSnapshot.child("" + i).child("enVida").getValue(String.class);
+                    if(enVida.equals("s")){
+                        String code = dataSnapshot.child("" + i).child("codigo").getValue(String.class);
+                        String nombre = dataSnapshot.child("" + i).child("nombre").getValue(String.class);
+                        String tipo = dataSnapshot.child("" + i).child("tipo").getValue(String.class);
+                        String raza = dataSnapshot.child("" + i).child("raza").getValue(String.class);
+                        String sexo = dataSnapshot.child("" + i).child("sexo").getValue(String.class);
+                        String fnacimiento = dataSnapshot.child("" + i).child("fecha_nacimiento").getValue(String.class);
 
-                    animalesFirebase.add(animal);
-                    Animal animalT = new Animal(nombre, code, tipo, raza, sexo, fnacimiento);
-                    listaAnimales.add(animalT);
-                    Log.i("----------->", animalT.getNombre());
+                        animal = code + " | " + nombre + " | " + tipo + " | " + raza + "  |  " + enVida;
+                        animalesFirebase.add(animal);
+                        Animal animalT = new Animal(nombre, code, tipo, raza, sexo, fnacimiento, enVida);
+                        listaAnimales.add(animalT);
+                        Log.i("----------->", animalT.getNombre());
+                    }
                 }
-
                 adaptar(animalesFirebase);
             }
 
@@ -156,11 +158,12 @@ public class BuscarAnimal extends AppCompatActivity {
                     String raza = dataSnapshot.child("" + i).child("raza").getValue(String.class);
                     String sexo = dataSnapshot.child("" + i).child("sexo").getValue(String.class);
                     String fnacimiento = dataSnapshot.child("" + i).child("fecha_nacimiento").getValue(String.class);
-                    String animal = code + " | " + nombre + " | " + tipo + " | " + raza;
+                    String enVida = dataSnapshot.child("" + i).child("enVida").getValue(String.class);
+                    String animal = code + " | " + nombre + " | " + tipo + " | " + raza + "  |  " + enVida;
 
                     if (code.equalsIgnoreCase(filtro) || nombre.equalsIgnoreCase(filtro) || tipo.equalsIgnoreCase(filtro) || raza.equalsIgnoreCase(filtro)) {
                         animalesFirebase.add(animal);
-                        Animal animalT = new Animal(nombre, code, tipo, raza, sexo, fnacimiento);
+                        Animal animalT = new Animal(nombre, code, tipo, raza, sexo, fnacimiento, enVida);
                         listaAnimales.add(animalT);
                     }
                 }

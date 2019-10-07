@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroMuerte"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtLabel3"
+        android:text="Registro de muerte\n"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCodigoAnimalM"
+        android:hint="Codigo del animal"
+        android:enabled="false"
+        android:layout_below="@+id/txtLabel3"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/txtDescMuerte"
+        android:hint="Descripción"
+        android:layout_below="@+id/txtCodigoAnimalM"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnReportarMuerte"
+        android:text="Reportar muerte"
+        android:layout_below="@+id/txtDescMuerte"/>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/cvFechaMuerte"
+        android:layout_below="@+id/btnReportarMuerte"
+        android:visibility="invisible">
+
+    </DatePicker>
+
+</RelativeLayout>

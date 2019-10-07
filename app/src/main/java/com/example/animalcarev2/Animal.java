@@ -21,6 +21,16 @@ public class Animal {
         this.enVida = "s";
     }
 
+    public Animal(String nombre, String codigo, String tipo, String raza, String sexo, String fecha_nacimiento, String enVida) {
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.tipo = tipo;
+        this.raza = raza;
+        this.sexo = sexo;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.enVida = enVida;
+    }
+
     public String getNombre() {
         return nombre;
     }

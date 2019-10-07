@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,9 +25,8 @@ import java.util.ArrayList;
 public class RegistroAnimal extends AppCompatActivity {
 
     //Vistas o componentes que se usaran
-    EditText txtNombreAnimal, txtCodigoAnimal, txtTipoAnimal, txtRazaAnimal;
+    EditText txtNombreAnimal, txtCodigoAnimal;
     Spinner spTipoAnimal, spRazaAnimal, spSexo;
-    RadioButton rbSexoHembra, rbSexoMacho;
     Button btnAlmacenarAnimal;
     DatePicker cvFechaNacimiento;
 
@@ -38,6 +36,7 @@ public class RegistroAnimal extends AppCompatActivity {
 
     private final String C_ANIMALES = "Animales";
     private final String C_TIPOSANIMALES = "TiposAnimales";
+    private final String C_CRIAS = "CriasV2";
 
     //Instansia de la base de datos (Contiene todos los datos)
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -50,19 +49,16 @@ public class RegistroAnimal extends AppCompatActivity {
      */
     private DatabaseReference refTiposAnimales = database.getReference(C_TIPOSANIMALES);
     private DatabaseReference refAnimales = database.getReference(C_ANIMALES);
-
-    //Referencia a la colecion Animal
-    private DatabaseReference animales;
+    private DatabaseReference refCrias = database.getReference(C_CRIAS);
 
     //Variable que almacena el conigo autogenerado
     private String codigo;
 
-    //Lista para almacenar los tipos de animales
-    private ArrayList<String> tiposAnimales = new ArrayList<String>();
-
     //Tamaño del arbol de Animales
     long sizeAnimales;
 
+    //Control para verificar si no es un reporte de Animal-Cria
+    private String codigoMadre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +69,6 @@ public class RegistroAnimal extends AppCompatActivity {
         iniViwes();
         obtenerTiposAnimal();
         llenarListSexoAnimal();
-
 
         /**
          * Accion que determina el tamaño del arbol de animales (Canidad de animales registrados)
@@ -162,65 +157,18 @@ public class RegistroAnimal extends AppCompatActivity {
     }
 
     /**
-     * Metodo que registra a un animal, en la base de datos
+     * Metodo que determina si el activity, presenta funcion para reportar Animal-Cria
+     * @return
      */
-    private void registrarAnimal(){
-        String nombre = txtNombreAnimal.getText().toString();
-        String tipo = spTipoAnimal.getSelectedItem().toString();
-        String raza;
-        //
-
-        if(spRazaAnimal.getSelectedItem() != null){
-            raza = spRazaAnimal.getSelectedItem().toString();
-        }else{
-            raza = "N/A";
-        }
-        String sexo;
-        //Log.println(Log.ASSERT, " -----------------> ", tipo);
-        if (rbSexoHembra.isChecked()){
-            sexo = SEXO_HEMBRA;
-        } else {
-            sexo = SEXO_MACHO;
-        }
-        String fecha_nacimiento = cvFechaNacimiento.getYear() + "/" + cvFechaNacimiento.getMonth() + "/" + cvFechaNacimiento.getDayOfMonth();
-        /*java.sql.Date newDate = new java.sql.Date(76445678);
-        Date fecha_nacimiento = new Date();
-        fecha_nacimiento.setYear(cvFechaNacimiento.getYear()-1900);
-        fecha_nacimiento.setMonth(cvFechaNacimiento.getMonth());
-        fecha_nacimiento.setDate(cvFechaNacimiento.getDayOfMonth());
-        Log.i("------->", ""+ fecha_nacimiento);*/
-        if(nombre.isEmpty()){
-            Toast.makeText(this, "Falta el nombre", Toast.LENGTH_SHORT).show();
-        }else{
-            if (tipo.isEmpty()){
-                Toast.makeText(this, "Falta el tipo", Toast.LENGTH_SHORT).show();
-            }else{
-                if (raza.isEmpty()){
-                    Toast.makeText(this, "Falta la raza", Toast.LENGTH_SHORT).show();
-                }else{
-                    if (!rbSexoHembra.isChecked() && !rbSexoMacho.isChecked()){
-                        Toast.makeText(this, "Falta el sexo", Toast.LENGTH_SHORT).show();
-                    }else{
-
-                        //String codigo = animal.push().getKey();
-                        Animal nuevoAnimal = new Animal(nombre, codigo, tipo, raza, sexo, fecha_nacimiento);
-                        /**
-                         * A continuacion, semuestra como se añade un registro con sus respectivos hijos
-                         */
-                        refAnimales.child(String.valueOf(sizeAnimales)).setValue(nuevoAnimal);
-
-                        /**
-                         * Modelo de JSON en firebase
-                         * Animales
-                         *         "codigo"
-                         *                  <el objeto del animal
-                         */
-
-                        Toast.makeText(this, "Animal registrado con exito", Toast.LENGTH_SHORT).show();
-                        this.finish();
-                    }
-                }
-            }
+    private boolean esReporteCria(){
+        boolean exito = false;
+        Bundle bundle = this.getIntent().getExtras();
+        try{
+            codigoMadre = bundle.getString("codigoAnimal");
+            exito = true;
+            return exito;
+        }catch (Exception e){
+            return exito;
         }
     }
 
@@ -254,11 +202,31 @@ public class RegistroAnimal extends AppCompatActivity {
                          */
 
                         Toast.makeText(this, "Animal registrado con exito", Toast.LENGTH_SHORT).show();
+                        if(esReporteCria()){
+                            reportarCria(codigo, codigoMadre);
+                            Toast.makeText(this, "Cria reportada con exito", Toast.LENGTH_SHORT).show();
+                        }
                         this.finish();
                     }
                 }
             }
         }
+    }
+
+    public void reportarCria(final String codigoCria, final String codigoMadre){
+        refCrias.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long size = dataSnapshot.getChildrenCount();
+                refCrias.child(codigoMadre).child("listaCrias").child(String.valueOf(size))
+                        .child("codigo").setValue(codigoCria);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     /**

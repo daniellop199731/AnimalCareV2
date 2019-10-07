@@ -21,9 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class ReporteProduccion extends AppCompatActivity {
+public class RegistroProduccion extends AppCompatActivity {
 
     ////////////////DECLARAION DE VISTAS
     private EditText txtCodigo, txtUnidadMedida, txtCantidad, txtFeProduccion;
@@ -55,7 +54,7 @@ public class ReporteProduccion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reporte_produccion);
+        setContentView(R.layout.activity_registro_produccion);
         Bundle bundle = this.getIntent().getExtras();
         codigoAnimal = bundle.getString("codigoAnimal");
         tipoAnimal = bundle.getString("tipoAnimal");

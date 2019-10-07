@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReporteProduccion"
+    tools:context=".RegistroProduccion"
     android:padding="10dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtTitulo"
-        android:text="Reporte de produccion\n"
+        android:text="Registro de produccion\n"
         android:textSize="30dp"/>
 
     <EditText

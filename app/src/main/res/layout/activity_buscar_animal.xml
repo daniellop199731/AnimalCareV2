@@ -53,12 +53,20 @@
                android:layout_height="wrap_content"
                android:layout_alignBaseline="@id/tvCodigo"
                android:layout_toRightOf="@id/tvTipoAnimal"
-               android:text="Raza" />
+               android:text="Raza  |  " />
+
+           <TextView
+               android:id="@+id/tvEnvida"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBaseline="@id/tvCodigo"
+               android:layout_toRightOf="@id/tvRazaAnimal"
+               android:text="En vida"/>
 
            <ListView
                android:layout_width="match_parent"
                android:layout_height="500dp"
-               android:layout_below="@+id/tvNombre"
+               android:layout_below="@+id/tvEnvida"
                android:id="@+id/txtresultado"/>
 
 
