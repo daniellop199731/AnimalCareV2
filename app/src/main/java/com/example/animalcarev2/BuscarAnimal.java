@@ -87,6 +87,9 @@ public class BuscarAnimal extends AppCompatActivity {
                 Log.i("----->", listaAnimales.get(i).getNombre());
                 animal = listaAnimales.get(i);
                 intent = new Intent(getApplicationContext(), MenuRegistroAnimal.class);
+                ////////////// ESTO NO VA AQUI
+                bundle.putString("tipoAccion", "muerte");//SOLO PARA LISTA MUERTES
+                ///////////////////////////////////////////////////////////////77
                 bundle.putString("nombre", animal.getNombre());
                 bundle.putString("codigo", animal.getCodigo());
                 bundle.putString("tipo", animal.getTipo());

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnimalesMuertos">
+
+    <TextView
+        android:id="@+id/tvCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="Código |  " />
+
+    <TextView
+        android:id="@+id/tvNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvCodigo"
+        android:layout_toRightOf="@id/tvCodigo"
+        android:text="Nombre  |  " />
+
+    <TextView
+        android:id="@+id/tvTipoAnimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvCodigo"
+        android:layout_toRightOf="@id/tvNombre"
+        android:text="Tipo  |  " />
+
+    <TextView
+        android:id="@+id/tvSexo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvCodigo"
+        android:layout_toRightOf="@id/tvTipoAnimal"
+        android:text="Sexo   |  " />
+
+    <TextView
+        android:id="@+id/tvFechaMuerte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvCodigo"
+        android:layout_toRightOf="@id/tvRazaAnimal"
+        android:text="Fecha muerte"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="139dp"
+        android:id="@+id/listaAnimalesMuertos"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/tvCodigo"/>
+
+    />
+</RelativeLayout>

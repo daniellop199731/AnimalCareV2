@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtTitulo"
-        android:text="Dados del animal\n"
+        android:text="Datos del animal\n"
         android:layout_centerHorizontal="true"
         android:textSize="30dp" />
 
