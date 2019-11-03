@@ -43,4 +43,11 @@
         android:text="Reportar cria"
         android:layout_below="@+id/btnReporteMuerte"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnListarCrias"
+        android:text="Listar crias"
+        android:layout_below="@+id/btnReporteCria"/>
+
 </RelativeLayout>

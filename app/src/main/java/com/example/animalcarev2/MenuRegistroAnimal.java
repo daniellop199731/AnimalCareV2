@@ -22,7 +22,7 @@ public class MenuRegistroAnimal extends AppCompatActivity {
     //////////////////////////////DECLARACION DE VISTAS
     private TextView txtDatosAnimal;
 
-    private Button btnReportarProduccion, btnReportatMuerte, btnReportarCria;
+    private Button btnReportarProduccion, btnReportatMuerte, btnReportarCria, btnListarCrias;
 
     //Instansia de la base de datos (Contiene todos los datos)
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -70,12 +70,19 @@ public class MenuRegistroAnimal extends AppCompatActivity {
                     tipoAnimal = bundle.getString("tipo");
                     sexoAnimal = bundle.getString("sexo");
 
+                    sizeAnimales = dataSnapshot.child(codigoAimal).child("listaCrias").getChildrenCount();
+                    Log.i("Crias ", sizeAnimales+"");
+
                     if(sexoAnimal.equals("Macho")){
                         btnReportarCria.setVisibility(View.INVISIBLE);
+                        btnListarCrias.setVisibility(View.INVISIBLE);
+                    }else{
+                        if(sizeAnimales < 1){
+                            btnListarCrias.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(), "El animal no tiene crias",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
-
-                    sizeAnimales = dataSnapshot.child(codigoAimal).child("listaCrias").getChildrenCount();
-                    Log.i("Crias: ", sizeAnimales+"");
 
                     if(sexoAnimal.equals("Hembra")){
                         datos = "Nombre : " + bundle.getString("nombre") + "\n\n" +
@@ -144,6 +151,18 @@ public class MenuRegistroAnimal extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Accion del boton "Listar crias"
+        btnListarCrias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("codigoAnimal", codigoAimal);
+                intent = new Intent(getApplicationContext(), ListaCrias.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -194,5 +213,7 @@ public class MenuRegistroAnimal extends AppCompatActivity {
         btnReportatMuerte = findViewById(R.id.btnReporteMuerte);
 
         btnReportarCria = findViewById(R.id.btnReporteCria);
+
+        btnListarCrias = findViewById(R.id.btnListarCrias);
     }
 }

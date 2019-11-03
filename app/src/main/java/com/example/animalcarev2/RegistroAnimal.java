@@ -188,9 +188,10 @@ public class RegistroAnimal extends AppCompatActivity {
                     }else{
 
                         //String codigo = animal.push().getKey();
+                        //String enVida = "s";
                         Animal nuevoAnimal = new Animal(nombre, codigo, tipo, raza, sexo, feNacimiento);
                         /**
-                         * A continuacion, semuestra como se añade un registro con sus respectivos hijos
+                         * A continuacion, se muestra como se añade un registro con sus respectivos hijos
                          */
                         refAnimales.child(String.valueOf(sizeAnimales)).setValue(nuevoAnimal);
 
