@@ -218,7 +218,7 @@ public class RegistroAnimal extends AppCompatActivity {
         refCrias.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long size = dataSnapshot.getChildrenCount();
+                long size = dataSnapshot.child(codigoMadre).child("listaCrias").getChildrenCount();
                 refCrias.child(codigoMadre).child("listaCrias").child(String.valueOf(size))
                         .child("codigo").setValue(codigoCria);
             }
